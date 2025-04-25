@@ -45,6 +45,16 @@ export default function MatkulPage() {
     setEditId(item.id);
     setFormVisible(true);
   };
+
+  const handleDelete = async (id) => {
+    if (!confirm('Are You Sure?')) return;
+    await fetch('/api/matkul', {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id }),
+    });
+    fetchMatkuls();
+  };
   
   return (
     <div>
@@ -95,6 +105,7 @@ export default function MatkulPage() {
               <td>{item.kode}</td>
               <td>{item.nama}</td>
               <td><button onClick={() => handleEdit(item)}>Edit</button></td>
+              <td><button onClick={() => handleDelete(item.id)}>Delete</button></td>
             </tr>
           ))}
           {matkuls.length === 0 && (

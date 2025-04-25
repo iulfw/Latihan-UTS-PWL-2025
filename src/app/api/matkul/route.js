@@ -28,4 +28,11 @@ export async function PUT(request) {
         data: { kode, nama },
     });
     return Response.json(matkul);
+}
+
+export async function DELETE(request) {
+    const { id } = await request.json();
+    if (!id) return Response.json({ error: 'ID Not Found' }, { status: 400 });
+    await prisma.matkul.delete({ where: { id } });
+    return Response.json({ message: 'Deleted Successfully' });
 }  
